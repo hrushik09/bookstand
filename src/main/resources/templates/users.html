@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org"
 >
 <body layout:fragment="content">
-<h1>Users</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Value</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user, userStat : ${users}">
-        <th scope="row" th:text="${userStat.index}"></th>
-        <td th:text="${user}"></td>
-    </tr>
-    </tbody>
-</table>
+<div sec:authorize="isAuthenticated()">
+    <h1>Users</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user, userStat : ${users}">
+            <th scope="row" th:text="${userStat.index}"></th>
+            <td th:text="${user}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <h1>Create User</h1>
 <form action="/users" method="post">
     <div class="mb-3">
