@@ -1,4 +1,4 @@
-package com.hrushi.bookstand;
+package com.hrushi.bookstand.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
