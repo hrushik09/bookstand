@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<body layout:fragment="content">
+<h1>Users</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user, userStat : ${users}">
+        <th scope="row" th:text="${userStat.index}"></th>
+        <td th:text="${user}"></td>
+    </tr>
+    </tbody>
+</table>
+<h1>Create User</h1>
+<form action="/users" method="post">
+    <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input class="form-control" id="username" name="username" required type="text">
+        <label class="form-label" for="password">Username</label>
+        <input class="form-control" id="password" name="password" required type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+</body>
+</html>

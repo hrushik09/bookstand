@@ -25,8 +25,13 @@ public class AuthorityService {
     }
 
     public List<String> findAll() {
-        return authorityRepository.findAll()
-                .stream().map(AuthorityEntity::getValue)
+        return authorityRepository.findAll().stream()
+                .map(AuthorityEntity::getValue)
                 .toList();
+    }
+
+    public AuthorityEntity findAuthorityEntityByValue(String value) {
+        return authorityRepository.findByValue(value)
+                .orElseThrow(() -> new AuthorityDoesNotExist(value));
     }
 }
