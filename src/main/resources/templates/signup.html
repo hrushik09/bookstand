@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Login</title>
+    <title>Sign Up</title>
     <link href="/webjars/bootstrap/5.3.3/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
@@ -19,13 +19,7 @@
                                     <div class="text-center">
                                         <h4 class="mt-1 mb-5 pb-1">Bookstand</h4>
                                     </div>
-                                    <form method="post" th:action="@{/login}">
-                                        <div class="alert alert-danger" th:if="${param.error}">
-                                            Invalid username and password.
-                                        </div>
-                                        <div class="alert alert-success" th:if="${param.logout}">
-                                            You have been logged out.
-                                        </div>
+                                    <form method="post" th:action="@{/signup}">
                                         <div class="mb-3">
                                             <label class="form-label" for="username">Username</label>
                                             <input class="form-control" id="username" name="username" required
@@ -38,12 +32,7 @@
                                         </div>
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button class="btn btn-primary"
-                                                    type="submit">Log in
-                                            </button>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <p class="mb-0 me-2">Don't have an account?</p>
-                                            <button class="btn btn-link" type="button"><a href="/signup">Sign Up</a>
+                                                    type="submit">Sign Up
                                             </button>
                                         </div>
                                     </form>
