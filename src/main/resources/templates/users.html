@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org"
 >
 <body layout:fragment="content">
+<div th:replace="~{tempauth::tempauth}"></div>
 <div sec:authorize="isAuthenticated()">
     <h1>Users</h1>
     <table class="table">
@@ -26,7 +27,7 @@
     <div class="mb-3">
         <label class="form-label" for="username">Username</label>
         <input class="form-control" id="username" name="username" required type="text">
-        <label class="form-label" for="password">Username</label>
+        <label class="form-label" for="password">Password</label>
         <input class="form-control" id="password" name="password" required type="password">
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>

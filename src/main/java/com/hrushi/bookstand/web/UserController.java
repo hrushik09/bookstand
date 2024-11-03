@@ -33,6 +33,6 @@ class UserController {
     String create(@Valid CreateUserRequest request) {
         CreateUserCommand cmd = new CreateUserCommand(request.username(), request.password(), List.of("temp", "temp:read"));
         userService.createUser(cmd);
-        return "redirect:/users";
+        return "redirect:/";
     }
 }
