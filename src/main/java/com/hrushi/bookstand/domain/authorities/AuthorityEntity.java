@@ -17,6 +17,9 @@ public class AuthorityEntity {
     @Column(nullable = false, insertable = false, updatable = false)
     private Instant updatedAt;
 
+    protected AuthorityEntity() {
+    }
+
     public Long getId() {
         return id;
     }
