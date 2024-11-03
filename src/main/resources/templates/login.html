@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Login</title>
+    <link href="/webjars/bootstrap/5.3.3/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
-<form method="post" th:action="@{/login}">
-    <fieldset>
-        <legend>Please Login</legend>
-        <div class="alert alert-error" th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div class="alert alert-success" th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <label for="username">Username</label>
-        <input id="username" name="username" required type="text">
-        <label for="password">Password</label>
-        <input id="password" name="password" required type="password">
-        <div class="form-actions">
-            <button class="btn" type="submit">Log in</button>
-        </div>
-    </fieldset>
-</form>
+<main>
+    <div class="container">
+        <form method="post" th:action="@{/login}">
+            <div class="alert alert-error" th:if="${param.error}">
+                Invalid username and password.
+            </div>
+            <div class="alert alert-success" th:if="${param.logout}">
+                You have been logged out.
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="username">Username</label>
+                <input class="form-control" id="username" name="username" required type="text">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Password</label>
+                <input class="form-control" id="password" name="password" required type="password">
+            </div>
+            <button class="btn btn-primary" type="submit">Log in</button>
+        </form>
+    </div>
+</main>
+<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
 </body>
 </html>
