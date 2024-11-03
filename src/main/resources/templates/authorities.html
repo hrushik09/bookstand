@@ -22,11 +22,17 @@
 </table>
 <h1>Create Authority</h1>
 <form action="/authorities" method="post">
+    <div class="alert alert-danger" th:if="${param.error}">
+        Invalid Value. Please try a different one.
+    </div>
+    <div class="alert alert-success" th:if="${param.success}">
+        Created Successfully.
+    </div>
     <div class="mb-3">
         <label class="form-label" for="authorityValue">Value</label>
         <input class="form-control" id="authorityValue" name="value" required type="text">
     </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit">Create</button>
 </form>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.hrushi.bookstand.web;
 
 import com.hrushi.bookstand.domain.users.CreateUserCommand;
 import com.hrushi.bookstand.domain.users.CreateUserRequest;
+import com.hrushi.bookstand.domain.users.UserAlreadyExists;
 import com.hrushi.bookstand.domain.users.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
@@ -29,7 +30,11 @@ class SignupController {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     String create(@Valid CreateUserRequest request) {
         CreateUserCommand cmd = new CreateUserCommand(request.username(), request.password(), List.of("temp", "temp:read"));
-        userService.createUser(cmd);
+        try {
+            userService.createUser(cmd);
+        } catch (UserAlreadyExists e) {
+            return "redirect:/signup?error";
+        }
         return "redirect:/login";
     }
 }

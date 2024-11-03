@@ -1,5 +1,6 @@
 package com.hrushi.bookstand.web;
 
+import com.hrushi.bookstand.domain.authorities.AuthorityAlreadyExists;
 import com.hrushi.bookstand.domain.authorities.AuthorityService;
 import com.hrushi.bookstand.domain.authorities.CreateAuthorityCommand;
 import com.hrushi.bookstand.domain.authorities.CreateAuthorityRequest;
@@ -32,7 +33,11 @@ class AuthorityController {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     String create(@Valid CreateAuthorityRequest request) {
         CreateAuthorityCommand cmd = new CreateAuthorityCommand(request.value());
-        authorityService.createAuthority(cmd);
-        return "redirect:/authorities";
+        try {
+            authorityService.createAuthority(cmd);
+        } catch (AuthorityAlreadyExists e) {
+            return "redirect:/authorities?error";
+        }
+        return "redirect:/authorities?success";
     }
 }
