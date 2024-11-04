@@ -7,6 +7,8 @@
         <p>You are authenticated</p>
         <div sec:authentication="name"></div>
         <div sec:authentication="principal.authorities"></div>
+        <!--        used in some templated only-->
+        <div th:text="${id}"></div>
     </div>
     <div sec:authorize="isAnonymous()">You are not authenticated</div>
 </div>

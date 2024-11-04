@@ -8,10 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-public record SecuredUser(String username, String password,
+public record SecuredUser(Long id, String username, String password,
                           List<SimpleGrantedAuthority> authorities) implements UserDetails {
     SecuredUser(UserEntity userEntity) {
-        this(userEntity.getUsername(),
+        this(userEntity.getId(), userEntity.getUsername(),
                 userEntity.getPassword(),
                 userEntity.getAuthorities().stream()
                         .map(AuthorityEntity::getValue)
