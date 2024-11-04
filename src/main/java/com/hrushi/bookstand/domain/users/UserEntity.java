@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(name = "UK_users_username", columnNames = "username"))
-class UserEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +24,9 @@ class UserEntity {
     private Instant createdAt;
     @Column(nullable = false, insertable = false, updatable = false)
     private Instant updatedAt;
+
+    protected UserEntity() {
+    }
 
     public Long getId() {
         return id;
