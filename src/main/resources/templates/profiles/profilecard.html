@@ -1,0 +1,8 @@
+<div hx-swap="outerHTML" hx-target="this" th:fragment="profilecard(profile)">
+    <div>FirstName: <span th:text="${profile.firstName()}"></span></div>
+    <div>LastName: <span th:text="${profile.lastName()}"></span></div>
+    <div>Country: <span th:text="${profile.country()}"></span></div>
+    <div>Email: <span th:text="${profile.email()}"></span></div>
+    <div>Bio: <span th:text="${profile.bio()}"></span></div>
+    <button hx-get="/profiles/update">Update</button>
+</div>

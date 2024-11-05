@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<body layout:fragment="content">
+<h1>Profile</h1>
+<div th:replace="~{profiles/profilecard(${profile})}"></div>
+</body>
+</html>
