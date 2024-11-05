@@ -43,4 +43,8 @@ public class UserService {
                 .map(UserEntity::getUsername)
                 .toList();
     }
+
+    public UserEntity getReferenceById(Long id) {
+        return userRepository.getReferenceById(id);
+    }
 }
