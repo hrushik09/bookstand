@@ -1,6 +1,5 @@
 package com.hrushi.bookstand.batch;
 
-import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ public class SyncData {
         this.addAuthors = addAuthors;
     }
 
-    @PostConstruct
+    //    @PostConstruct
     void toLocalDatabase() throws IOException {
         log.info("start sync to local database");
 //        fill value when running locally
