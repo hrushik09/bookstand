@@ -3,7 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <div th:fragment="tempauth">
-    <div sec:authorize="isAuthenticated()">You are authenticated</div>
+    <div sec:authorize="isAuthenticated()">
+        <p>You are authenticated</p>
+        <div sec:authentication="name"></div>
+        <div sec:authentication="principal.authorities"></div>
+        <!--        used in some templated only-->
+        <div th:text="${id}"></div>
+    </div>
     <div sec:authorize="isAnonymous()">You are not authenticated</div>
 </div>
 </html>

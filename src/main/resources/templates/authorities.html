@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<body layout:fragment="content">
+<div th:replace="~{tempauth::tempauth}"></div>
+<h1>Authorities</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="authority, authorityStat : ${authorities}">
+        <th scope="row" th:text="${authorityStat.index}"></th>
+        <td th:text="${authority}"></td>
+    </tr>
+    </tbody>
+</table>
+<h1>Create Authority</h1>
+<form action="/authorities" method="post">
+    <div class="alert alert-danger" th:if="${param.error}">
+        Invalid Value. Please try a different one.
+    </div>
+    <div class="alert alert-success" th:if="${param.success}">
+        Created Successfully.
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="authorityValue">Value</label>
+        <input class="form-control" id="authorityValue" name="value" required type="text">
+    </div>
+    <button class="btn btn-primary" type="submit">Create</button>
+</form>
+</body>
+</html>

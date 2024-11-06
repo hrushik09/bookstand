@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<body layout:fragment="content">
+<div th:replace="~{tempauth::tempauth}"></div>
+<h1>Users</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">username</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user, userStat : ${users}">
+        <th scope="row" th:text="${userStat.index}"></th>
+        <td th:text="${user}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
