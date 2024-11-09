@@ -25,4 +25,10 @@ public class AuthorService {
     public Optional<AuthorEntity> findByOpenLibraryKey(String openLibraryKey) {
         return authorRepository.findByOpenLibraryKey(openLibraryKey);
     }
+
+    public Author getAuthor(Long id) {
+        return authorRepository.findById(id)
+                .map(authorEntity -> new Author(authorEntity.getId(), authorEntity.getName()))
+                .orElseThrow(() -> new AuthorDoesNotExist(id));
+    }
 }
