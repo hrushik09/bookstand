@@ -6,7 +6,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "authors", uniqueConstraints = @UniqueConstraint(name = "UK_authors_open_library_key", columnNames = "open_library_key"))
-class AuthorEntity {
+public class AuthorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

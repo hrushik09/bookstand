@@ -30,8 +30,10 @@ class AddAuthors {
                 try {
                     String substring = line.substring(line.indexOf("{"));
                     JSONObject jsonObject = new JSONObject(substring);
+
                     String keyWithPrefix = jsonObject.getString("key");
                     String openLibraryKey = keyWithPrefix.substring(9);
+
                     String name;
                     try {
                         name = jsonObject.getString("name");
@@ -41,6 +43,7 @@ class AddAuthors {
                     if (name.length() > 200) {
                         name = name.substring(0, 200);
                     }
+
                     authorService.createAuthor(new CreateAuthorCommand(openLibraryKey, name));
                     lineNumber++;
                 } catch (Exception e) {
