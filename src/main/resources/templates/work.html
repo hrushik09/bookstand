@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<body layout:fragment="content">
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img alt="work image" class="img-fluid rounded-start" th:src="${work.coverUrl()}">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${work.title()}"></h5>
+                <h6 th:if="${work.subtitle() != null}" th:text="${work.subtitle()}"></h6>
+                <ul>
+                    <li th:each="author : ${work.authors()}">
+                        <a th:href="@{/authors/{id}(id=${author.id()})}"><span th:text="${author.name()}"></span></a>
+                    </li>
+                </ul>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
