@@ -1,6 +1,5 @@
 package com.hrushi.bookstand.batch;
 
-import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,9 +21,11 @@ public class SyncData {
         this.addWorks = addWorks;
     }
 
-    @PostConstruct
     private void sync() {
-        String directory = "/Users/hrushikeshkandale/Downloads/dummy";
+        String directory = null;
+        if (directory == null) {
+            throw new RuntimeException("directory is null");
+        }
         Consumer<Path> consumer = addWorks::fromLocalFile;
         process(directory, consumer);
     }
