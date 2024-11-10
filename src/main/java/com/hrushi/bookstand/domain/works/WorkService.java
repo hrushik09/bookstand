@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class WorkService {
     private static final String BASE_URL = "https://covers.openlibrary.org/b/id/";
-    private static final String SUFFIX = "-M.jpg";
+    private static final String SUFFIX = "-L.jpg";
     private final WorkRepository workRepository;
     private final AuthorService authorService;
 
