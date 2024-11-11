@@ -1,0 +1,12 @@
+CREATE TABLE work_ratings
+(
+    id         BIGINT    NOT NULL AUTO_INCREMENT,
+    user_id    BIGINT    NOT NULL,
+    work_id    BIGINT    NOT NULL,
+    rating     INT       NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT PK_work_ratings PRIMARY KEY (id),
+    CONSTRAINT FK_work_ratings_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_work_ratings_work_id FOREIGN KEY (work_id) REFERENCES works (id) ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -17,6 +17,7 @@
                         <a th:href="@{/authors/{id}(id=${author.id()})}"><span th:text="${author.name()}"></span></a>
                     </li>
                 </ul>
+                <div th:replace="~{works/rating::rating(id=${work.id()},rating=${work.rating()})}"></div>
             </div>
         </div>
     </div>

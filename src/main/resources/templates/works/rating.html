@@ -1,0 +1,9 @@
+<select hx-swap="outerHTML" hx-target="this" id="rating" name="rating"
+        th:attr="hx-post=|/works/${id}/rating|" th:fragment="rating(id,rating)">
+    <option th:selected="${rating} == null">Select</option>
+    <option th:selected="${rating} == 1" value=1>&#9733;</option>
+    <option th:selected="${rating} == 2" value=2>&#9733;&#9733;</option>
+    <option th:selected="${rating} == 3" value=3>&#9733;&#9733;&#9733;</option>
+    <option th:selected="${rating} == 4" value=4>&#9733;&#9733;&#9733;&#9733;</option>
+    <option th:selected="${rating} == 5" value=5>&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+</select>
