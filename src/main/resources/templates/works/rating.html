@@ -1,4 +1,4 @@
-<div id="rating" th:fragment="rating(id,rating)">
+<div class="mb-3" id="rating" th:fragment="rating(id,rating)">
     <label>Rating
         <select class="form-select" hx-swap="outerHTML" hx-target="#rating" name="rating"
                 th:attr="hx-post=|/works/${id}/rating|">

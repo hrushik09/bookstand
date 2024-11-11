@@ -8,6 +8,7 @@ public record Work(
         String subtitle,
         String coverUrl,
         Integer rating,
+        String review,
         List<WorkAuthor> authors
 ) {
 }

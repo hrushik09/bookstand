@@ -10,14 +10,15 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title" th:text="${work.title()}"></h5>
-                <h6 th:if="${work.subtitle() != null}" th:text="${work.subtitle()}"></h6>
+                <h2 class="card-title" th:text="${work.title()}"></h2>
+                <h5 th:if="${work.subtitle() != null}" th:text="${work.subtitle()}"></h5>
                 <ul>
                     <li th:each="author : ${work.authors()}">
                         <a th:href="@{/authors/{id}(id=${author.id()})}"><span th:text="${author.name()}"></span></a>
                     </li>
                 </ul>
                 <div th:replace="~{works/rating::rating(id=${work.id()},rating=${work.rating()})}"></div>
+                <div th:replace="~{works/review::review(review=${work.review()})}"></div>
             </div>
         </div>
     </div>

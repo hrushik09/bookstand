@@ -20,12 +20,14 @@ public class WorkService {
     private final AuthorService authorService;
     private final WorkRatingRepository workRatingRepository;
     private final UserService userService;
+    private final WorkReviewRepository workReviewRepository;
 
-    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository, UserService userService) {
+    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository, UserService userService, WorkReviewRepository workReviewRepository) {
         this.workRepository = workRepository;
         this.authorService = authorService;
         this.workRatingRepository = workRatingRepository;
         this.userService = userService;
+        this.workReviewRepository = workReviewRepository;
     }
 
     @Transactional
@@ -50,10 +52,10 @@ public class WorkService {
         Integer rating = workRatingRepository.findByUserIdAndWorkId(userId, workId)
                 .map(WorkRatingEntity::getRating)
                 .orElse(null);
-        return mapper(workEntity, rating);
-    }
+        String review = workReviewRepository.findByUserIdAndWorkId(userId, workId)
+                .map(WorkReviewEntity::getReview)
+                .orElse(null);
 
-    private Work mapper(WorkEntity workEntity, Integer rating) {
         String coverUrl;
         if (workEntity.getCoverId() != null) {
             coverUrl = BASE_URL + workEntity.getCoverId() + SUFFIX;
@@ -63,7 +65,7 @@ public class WorkService {
         List<WorkAuthor> workAuthors = workEntity.getAuthors().stream()
                 .map(authorEntity -> new WorkAuthor(authorEntity.getId(), authorEntity.getName()))
                 .toList();
-        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, workAuthors);
+        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, review, workAuthors);
     }
 
     @Transactional
