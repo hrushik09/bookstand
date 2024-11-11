@@ -2,6 +2,7 @@ package com.hrushi.bookstand.domain.works;
 
 import com.hrushi.bookstand.domain.authors.AuthorEntity;
 import com.hrushi.bookstand.domain.authors.AuthorService;
+import com.hrushi.bookstand.domain.users.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +19,13 @@ public class WorkService {
     private final WorkRepository workRepository;
     private final AuthorService authorService;
     private final WorkRatingRepository workRatingRepository;
+    private final UserService userService;
 
-    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository) {
+    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository, UserService userService) {
         this.workRepository = workRepository;
         this.authorService = authorService;
         this.workRatingRepository = workRatingRepository;
+        this.userService = userService;
     }
 
     @Transactional
@@ -66,7 +69,7 @@ public class WorkService {
     @Transactional
     public void updateRating(UpdateRatingCommand cmd) {
         WorkRatingEntity workRatingEntity = workRatingRepository.findByUserIdAndWorkId(cmd.userId(), cmd.workId())
-                .orElse(new WorkRatingEntity(cmd.userId(), cmd.workId()));
+                .orElse(new WorkRatingEntity(userService.getReferenceById(cmd.userId()), workRepository.getReferenceById(cmd.workId())));
         workRatingEntity.setRating(cmd.rating());
         workRatingRepository.save(workRatingEntity);
     }
