@@ -24,6 +24,14 @@ class WorkReviewEntity {
     @Column(nullable = false, insertable = false, updatable = false)
     private Instant updatedAt;
 
+    protected WorkReviewEntity() {
+    }
+
+    WorkReviewEntity(UserEntity userEntity, WorkEntity workEntity) {
+        this.userEntity = userEntity;
+        this.workEntity = workEntity;
+    }
+
     public Long getId() {
         return id;
     }

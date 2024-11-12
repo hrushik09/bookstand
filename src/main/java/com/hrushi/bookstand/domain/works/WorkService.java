@@ -75,4 +75,12 @@ public class WorkService {
         workRatingEntity.setRating(cmd.rating());
         workRatingRepository.save(workRatingEntity);
     }
+
+    @Transactional
+    public void updateReview(UpdateReviewCommand cmd) {
+        WorkReviewEntity workReviewEntity = workReviewRepository.findByUserIdAndWorkId(cmd.userId(), cmd.workId())
+                .orElse(new WorkReviewEntity(userService.getReferenceById(cmd.userId()), workRepository.getReferenceById(cmd.workId())));
+        workReviewEntity.setReview(cmd.review());
+        workReviewRepository.save(workReviewEntity);
+    }
 }
