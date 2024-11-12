@@ -1,4 +1,9 @@
-<div id="review" th:fragment="review(review)">
+<div class="mb-3" id="review" th:fragment="review(review)">
     <h6>Your Review</h6>
-    <p th:text="${review}"></p>
+    <div th:if="${review == null}">
+        <div th:replace="~{works/editreview::editreview(review=${review})}"></div>
+    </div>
+    <div th:if="${review != null}">
+        <div th:replace="~{works/showreview::showreview(review=${review})}"></div>
+    </div>
 </div>
