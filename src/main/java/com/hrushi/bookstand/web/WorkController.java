@@ -7,7 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/works")
@@ -25,7 +28,7 @@ class WorkController {
         return "works/index";
     }
 
-    @PostMapping(value = "/{id}/rating", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PutMapping(value = "/{id}/rating", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     String updateRating(@PathVariable("id") Long workId, @Valid UpdateRatingRequest request, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
         UpdateRatingCommand cmd = new UpdateRatingCommand(securedUser.id(), workId, request.rating());
         workService.updateRating(cmd);
