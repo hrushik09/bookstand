@@ -24,6 +24,13 @@ class ProfileEntity {
     private String email;
     private String bio;
 
+    protected ProfileEntity() {
+    }
+
+    public ProfileEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
     public Long getId() {
         return id;
     }
