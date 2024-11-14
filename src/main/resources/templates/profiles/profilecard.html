@@ -1,4 +1,6 @@
 <div hx-swap="outerHTML" hx-target="this" th:fragment="profilecard(profile)">
+    <i class="bi" th:classappend="${profile.classToAppendToIcon()}"
+       th:if="${!profile.classToAppendToIcon().isEmpty()}"></i>
     <div>FirstName: <span th:text="${profile.firstName()}"></span></div>
     <div>LastName: <span th:text="${profile.lastName()}"></span></div>
     <div>Country: <span th:text="${profile.country()}"></span></div>

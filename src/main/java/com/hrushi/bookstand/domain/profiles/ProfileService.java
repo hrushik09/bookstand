@@ -20,7 +20,7 @@ public class ProfileService {
 
     public Profile findProfile(Long userId) {
         return profileRepository.findByUserId(userId)
-                .map(profileEntity -> new Profile(profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getCountry().displayName(), profileEntity.getEmail(), profileEntity.getBio()))
+                .map(profileEntity -> new Profile(profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getCountry().displayName(), profileEntity.getEmail(), profileEntity.getBio(), profileEntity.getIcon().classToAppend()))
                 .orElse(Profile.dummyProfile());
     }
 
