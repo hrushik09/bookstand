@@ -1,6 +1,7 @@
 package com.hrushi.bookstand.domain.profiles;
 
 import com.hrushi.bookstand.domain.Country;
+import com.hrushi.bookstand.domain.Icon;
 import com.hrushi.bookstand.domain.users.UserEntity;
 import jakarta.persistence.*;
 
@@ -23,12 +24,16 @@ class ProfileEntity {
     @Column(unique = true)
     private String email;
     private String bio;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Icon icon;
 
     protected ProfileEntity() {
     }
 
-    public ProfileEntity(UserEntity userEntity) {
+    public ProfileEntity(UserEntity userEntity, Icon icon) {
         this.userEntity = userEntity;
+        this.icon = icon;
     }
 
     public Long getId() {
@@ -85,5 +90,13 @@ class ProfileEntity {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public Icon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Icon icon) {
+        this.icon = icon;
     }
 }

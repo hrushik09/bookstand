@@ -1,6 +1,8 @@
 package com.hrushi.bookstand.domain.profiles;
 
 import com.hrushi.bookstand.domain.Country;
+import com.hrushi.bookstand.domain.Icon;
+import com.hrushi.bookstand.domain.users.UserEntity;
 import com.hrushi.bookstand.domain.users.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +27,18 @@ public class ProfileService {
     @Transactional
     public void updateProfile(UpdateProfileCommand cmd) {
         ProfileEntity profileEntity = profileRepository.findByUserId(cmd.userId())
-                .orElse(new ProfileEntity(userService.getReferenceById(cmd.userId())));
+                .orElse(createNewProfileEntity(cmd));
         profileEntity.setFirstName(cmd.firstName());
         profileEntity.setLastName(cmd.lastName());
         profileEntity.setCountry(Country.valueOf(cmd.country()));
         profileEntity.setEmail(cmd.email());
         profileEntity.setBio(cmd.bio());
         profileRepository.save(profileEntity);
+    }
+
+    private ProfileEntity createNewProfileEntity(UpdateProfileCommand cmd) {
+        UserEntity userEntity = userService.getReferenceById(cmd.userId());
+        Icon icon = Icon.random();
+        return new ProfileEntity(userEntity, icon);
     }
 }
