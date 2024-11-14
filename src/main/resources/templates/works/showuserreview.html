@@ -1,7 +1,7 @@
-<div hx-swap="outerHTML" hx-target="this" th:fragment="showuserreview(id,review)">
+<div hx-swap="outerHTML" hx-target="this" th:fragment="showuserreview(id,currentUserReview)">
     <div class="card mb-3">
         <div class="card-body">
-            <p class="card-text" th:text="${review}"></p>
+            <p class="card-text" th:text="${currentUserReview}"></p>
             <a class="btn btn-primary" th:attr="hx-get=|/works/${id}/review/edit|">Click To Edit</a>
         </div>
     </div>

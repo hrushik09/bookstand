@@ -42,7 +42,7 @@ class WorkController {
         UpdateReviewCommand cmd = new UpdateReviewCommand(securedUser.id(), workId, request.review());
         workService.updateReview(cmd);
         model.addAttribute("id", workId);
-        model.addAttribute("review", request.review());
+        model.addAttribute("currentUserReview", request.review());
         return "works/showuserreview";
     }
 
@@ -50,7 +50,7 @@ class WorkController {
     String getEditReviewForm(@PathVariable("id") Long workId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
         String review = workService.getReview(securedUser.id(), workId);
         model.addAttribute("id", workId);
-        model.addAttribute("review", review);
+        model.addAttribute("currentUserReview", review);
         return "works/edituserreview";
     }
 
@@ -58,7 +58,7 @@ class WorkController {
     String getReview(@PathVariable("id") Long workId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
         String review = workService.getReview(securedUser.id(), workId);
         model.addAttribute("id", workId);
-        model.addAttribute("review", review);
+        model.addAttribute("currentUserReview", review);
         return "works/showuserreview";
     }
 }

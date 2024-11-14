@@ -18,7 +18,7 @@
                     </li>
                 </ul>
                 <div th:replace="~{works/rating::rating(id=${work.id()},rating=${work.rating()})}"></div>
-                <div th:replace="~{works/review::review(id=${work.id()},review=${work.review()})}"></div>
+                <div th:replace="~{works/review::review(id=${work.id()},currentUserReview=${work.currentUserReview()})}"></div>
             </div>
         </div>
     </div>
