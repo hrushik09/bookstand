@@ -20,10 +20,9 @@ public class ProfileService {
     }
 
     public Profile findProfile(Long userId) {
-        ProfileEntity profileEntity = profileRepository.findByUserId(userId)
-                .orElse(new ProfileEntity());
-        String countryName = profileEntity.getCountry() == null ? "" : profileEntity.getCountry().name();
-        return new Profile(profileEntity.getFirstName(), profileEntity.getLastName(), countryName, profileEntity.getEmail(), profileEntity.getBio());
+        return profileRepository.findByUserId(userId)
+                .map(profileEntity -> new Profile(profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getCountry().displayName(), profileEntity.getEmail(), profileEntity.getBio()))
+                .orElse(Profile.dummyProfile());
     }
 
     @Transactional

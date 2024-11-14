@@ -8,15 +8,20 @@
         <label for="country">Country</label>
         <select class="form-select" id="country" name="country" required
                 th:value="${profile.country()}">
-            <option th:selected="${profile.country() == 'INDIA'}" value="INDIA">India</option>
-            <option th:selected="${profile.country() == 'UNITED_STATES'}" value="UNITED_STATES">Unites States</option>
-            <option th:selected="${profile.country() == 'UNITED_KINGDOM'}" value="UNITED_KINGDOM">United Kingdom
+            <option th:selected="${profile.country().equalsIgnoreCase('INDIA')}" value="INDIA">India</option>
+            <option th:selected="${profile.country().equalsIgnoreCase('UNITED STATES')}" value="UNITED_STATES">United
+                States
             </option>
-            <option th:selected="${profile.country() == 'FRANCE'}" value="FRANCE">France</option>
-            <option th:selected="${profile.country() == 'GERMANY'}" value="GERMANY">Germany</option>
-            <option th:selected="${profile.country() == 'ITALY'}" value="ITALY">Italy</option>
-            <option th:selected="${profile.country() == 'SOUTH_AFRICA'}" value="SOUTH_AFRICA">South Africa</option>
-            <option th:selected="${profile.country() == 'BRAZIL'}" value="BRAZIL">Brazil</option>
+            <option th:selected="${profile.country().equalsIgnoreCase('UNITED KINGDOM')}" value="UNITED_KINGDOM">United
+                Kingdom
+            </option>
+            <option th:selected="${profile.country().equalsIgnoreCase('FRANCE')}" value="FRANCE">France</option>
+            <option th:selected="${profile.country().equalsIgnoreCase('GERMANY')}" value="GERMANY">Germany</option>
+            <option th:selected="${profile.country().equalsIgnoreCase('ITALY')}" value="ITALY">Italy</option>
+            <option th:selected="${profile.country().equalsIgnoreCase('SOUTH AFRICA')}" value="SOUTH_AFRICA">South
+                Africa
+            </option>
+            <option th:selected="${profile.country().equalsIgnoreCase('BRAZIL')}" value="BRAZIL">Brazil</option>
         </select>
         <label class="form-label" for="email">Email</label>
         <input class="form-control" id="email" name="email" th:value="${profile.email()}" type="email">
