@@ -52,9 +52,7 @@ public class WorkService {
         Integer rating = workRatingRepository.findByUserIdAndWorkId(userId, workId)
                 .map(WorkRatingEntity::getRating)
                 .orElse(null);
-        String review = workReviewRepository.findByUserIdAndWorkId(userId, workId)
-                .map(WorkReviewEntity::getReview)
-                .orElse(null);
+        String review = getReview(userId, workId);
 
         String coverUrl;
         if (workEntity.getCoverId() != null) {
@@ -82,5 +80,11 @@ public class WorkService {
                 .orElse(new WorkReviewEntity(userService.getReferenceById(cmd.userId()), workRepository.getReferenceById(cmd.workId())));
         workReviewEntity.setReview(cmd.review());
         workReviewRepository.save(workReviewEntity);
+    }
+
+    public String getReview(Long userId, Long workId) {
+        return workReviewRepository.findByUserIdAndWorkId(userId, workId)
+                .map(WorkReviewEntity::getReview)
+                .orElse(null);
     }
 }

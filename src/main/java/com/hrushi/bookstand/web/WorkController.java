@@ -45,4 +45,20 @@ class WorkController {
         model.addAttribute("review", request.review());
         return "works/showuserreview";
     }
+
+    @GetMapping("/{id}/review/edit")
+    String getEditReviewForm(@PathVariable("id") Long workId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
+        String review = workService.getReview(securedUser.id(), workId);
+        model.addAttribute("id", workId);
+        model.addAttribute("review", review);
+        return "works/edituserreview";
+    }
+
+    @GetMapping("/{id}/review")
+    String getReview(@PathVariable("id") Long workId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
+        String review = workService.getReview(securedUser.id(), workId);
+        model.addAttribute("id", workId);
+        model.addAttribute("review", review);
+        return "works/showuserreview";
+    }
 }
