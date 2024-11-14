@@ -6,8 +6,7 @@
         <label class="form-label" for="lastName">Last Name</label>
         <input class="form-control" id="lastName" name="lastName" required th:value="${profile.lastName()}" type="text">
         <label for="country">Country</label>
-        <select class="form-select" id="country" name="country" required
-                th:value="${profile.country()}">
+        <select class="form-select" id="country" name="country" required th:value="${profile.country()}">
             <option th:selected="${profile.country().equalsIgnoreCase('INDIA')}" value="INDIA">India</option>
             <option th:selected="${profile.country().equalsIgnoreCase('UNITED STATES')}" value="UNITED_STATES">United
                 States
