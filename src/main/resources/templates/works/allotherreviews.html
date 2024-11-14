@@ -1,15 +1,16 @@
 <div th:fragment="allotherreviews(allotherreviews)">
     <h6>Other Reviews</h6>
-    <table class="table table-hover">
-        <tbody>
+    <div th:each="otherreview : ${allotherreviews}">
         <!--/*@thymesVar id="otherreview" type="com.hrushi.bookstand.domain.works.WorkReview"*/-->
-        <tr th:each="otherreview : ${allotherreviews}">
-            <td th:text="${otherreview.id()}"></td>
-            <td th:text="${otherreview.userId()}"></td>
-            <td th:text="${otherreview.review()}"></td>
-            <td th:text="${otherreview.createdAt()}"></td>
-            <td th:text="${otherreview.updatedAt()}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <article>
+            <div>
+                <div th:text="${otherreview.userId()}"></div>
+            </div>
+            <div>
+                <div th:text="${otherreview.review()}"></div>
+                <div th:text="${otherreview.createdAt()}"></div>
+                <div th:text="${otherreview.updatedAt()}"></div>
+            </div>
+        </article>
+    </div>
 </div>
