@@ -46,27 +46,41 @@ public class WorkService {
         workRepository.save(workEntity);
     }
 
+    private static List<WorkAuthor> getWorkAuthors(WorkEntity workEntity) {
+        return workEntity.getAuthors().stream()
+                .map(authorEntity -> new WorkAuthor(authorEntity.getId(), authorEntity.getName()))
+                .toList();
+    }
+
+    private static String getCoverUrl(WorkEntity workEntity) {
+        if (workEntity.getCoverId() == null) {
+            return "";
+        }
+        return BASE_URL + workEntity.getCoverId() + SUFFIX;
+    }
+
     public Work getWork(Long userId, Long workId) {
         WorkEntity workEntity = workRepository.findWork(workId)
                 .orElseThrow(() -> new WorkDoesNotExist(workId));
-        Integer rating = workRatingRepository.findByUserIdAndWorkId(userId, workId)
-                .map(WorkRatingEntity::getRating)
-                .orElse(null);
+        Integer rating = getRating(userId, workId);
         String currentUserReview = getReview(userId, workId);
-        List<WorkReview> allOtherReviews = workReviewRepository.findByWorkId(workId).stream()
+        List<WorkReview> allOtherReviews = getAllOtherReviews(userId, workId);
+        String coverUrl = getCoverUrl(workEntity);
+        List<WorkAuthor> workAuthors = getWorkAuthors(workEntity);
+        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, currentUserReview, workAuthors, allOtherReviews);
+    }
+
+    private List<WorkReview> getAllOtherReviews(Long userId, Long workId) {
+        return workReviewRepository.findByWorkId(workId).stream()
                 .filter(workReviewEntity -> !workReviewEntity.getUserEntity().getId().equals(userId))
                 .map(workReviewEntity -> new WorkReview(workReviewEntity.getId(), workReviewEntity.getUserEntity().getId(), workReviewEntity.getReview(), workReviewEntity.getCreatedAt(), workReviewEntity.getUpdatedAt()))
                 .toList();
-        String coverUrl;
-        if (workEntity.getCoverId() != null) {
-            coverUrl = BASE_URL + workEntity.getCoverId() + SUFFIX;
-        } else {
-            coverUrl = "";
-        }
-        List<WorkAuthor> workAuthors = workEntity.getAuthors().stream()
-                .map(authorEntity -> new WorkAuthor(authorEntity.getId(), authorEntity.getName()))
-                .toList();
-        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, currentUserReview, workAuthors, allOtherReviews);
+    }
+
+    private Integer getRating(Long userId, Long workId) {
+        return workRatingRepository.findByUserIdAndWorkId(userId, workId)
+                .map(WorkRatingEntity::getRating)
+                .orElse(null);
     }
 
     @Transactional
