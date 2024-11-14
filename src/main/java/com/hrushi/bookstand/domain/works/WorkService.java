@@ -52,8 +52,11 @@ public class WorkService {
         Integer rating = workRatingRepository.findByUserIdAndWorkId(userId, workId)
                 .map(WorkRatingEntity::getRating)
                 .orElse(null);
-        String review = getReview(userId, workId);
-
+        String currentUserReview = getReview(userId, workId);
+        List<WorkReview> allOtherReviews = workReviewRepository.findByWorkId(workId).stream()
+                .filter(workReviewEntity -> !workReviewEntity.getUserEntity().getId().equals(userId))
+                .map(workReviewEntity -> new WorkReview(workReviewEntity.getId(), workReviewEntity.getUserEntity().getId(), workReviewEntity.getReview(), workReviewEntity.getCreatedAt(), workReviewEntity.getUpdatedAt()))
+                .toList();
         String coverUrl;
         if (workEntity.getCoverId() != null) {
             coverUrl = BASE_URL + workEntity.getCoverId() + SUFFIX;
@@ -63,7 +66,7 @@ public class WorkService {
         List<WorkAuthor> workAuthors = workEntity.getAuthors().stream()
                 .map(authorEntity -> new WorkAuthor(authorEntity.getId(), authorEntity.getName()))
                 .toList();
-        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, review, workAuthors);
+        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, currentUserReview, workAuthors, allOtherReviews);
     }
 
     @Transactional
