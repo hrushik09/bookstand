@@ -2,15 +2,22 @@
     <h6>Other Reviews</h6>
     <div th:each="otherreview : ${allotherreviews}">
         <!--/*@thymesVar id="otherreview" type="com.hrushi.bookstand.domain.works.WorkReview"*/-->
-        <article>
-            <div>
-                <div th:text="${otherreview.userId()}"></div>
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <div th:text="${otherreview.userId()}"></div>
+                    <img alt="user image" class="img-fluid rounded-start" src="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text" th:text="${otherreview.review()}"></p>
+                        <small class="card-text">Created At: <small class="text-body-secondary"
+                                                                    th:text="${otherreview.createdAt()}"></small></small>
+                        <small class="card-text">Updated At: <small class="text-body-secondary"
+                                                                    th:text="${otherreview.updatedAt()}"></small></small>
+                    </div>
+                </div>
             </div>
-            <div>
-                <div th:text="${otherreview.review()}"></div>
-                <div th:text="${otherreview.createdAt()}"></div>
-                <div th:text="${otherreview.updatedAt()}"></div>
-            </div>
-        </article>
+        </div>
     </div>
 </div>
