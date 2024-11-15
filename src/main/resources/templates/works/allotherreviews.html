@@ -4,11 +4,11 @@
         <!--/*@thymesVar id="otherreview" type="com.hrushi.bookstand.domain.works.WorkReview"*/-->
         <div class="card mb-3">
             <div class="row g-0">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div hx-swap="outerHTML" hx-target="this" hx-trigger="load"
                          th:attr="hx-get=|/avatars/${otherreview.userId()}|"></div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card-body">
                         <p class="card-text" th:text="${otherreview.review()}"></p>
                         <small class="card-text">Created At: <small class="text-body-secondary"

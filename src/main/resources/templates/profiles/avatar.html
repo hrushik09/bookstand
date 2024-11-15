@@ -1,5 +1,7 @@
 <div>
-    <i class="bi" th:classappend="${avatar.classToAppendToIcon()}"></i>
-    <div th:text="${avatar.firstName()} + ' ' + ${avatar.lastName()}"></div>
-    <div th:text="${avatar.country()}"></div>
+    <div class="card">
+        <i class="bi text-center" th:classappend="${avatar.classToAppendToIcon()}"></i>
+        <div class="text-center" th:text="${avatar.firstName()} + ' ' + ${avatar.lastName()}"></div>
+        <div class="text-center" th:text="${avatar.country()}"></div>
+    </div>
 </div>
