@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -23,13 +24,15 @@ public class WorkService {
     private final WorkRatingRepository workRatingRepository;
     private final UserService userService;
     private final WorkReviewRepository workReviewRepository;
+    private final WorkReviewLikeRepository workReviewLikeRepository;
 
-    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository, UserService userService, WorkReviewRepository workReviewRepository) {
+    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository, UserService userService, WorkReviewRepository workReviewRepository, WorkReviewLikeRepository workReviewLikeRepository) {
         this.workRepository = workRepository;
         this.authorService = authorService;
         this.workRatingRepository = workRatingRepository;
         this.userService = userService;
         this.workReviewRepository = workReviewRepository;
+        this.workReviewLikeRepository = workReviewLikeRepository;
     }
 
     @Transactional
@@ -106,5 +109,37 @@ public class WorkService {
         return workReviewRepository.findByUserIdAndWorkId(userId, workId)
                 .map(WorkReviewEntity::getReview)
                 .orElse(null);
+    }
+
+    public WorkReviewLikes getLikesForReview(Long userId, Long workReviewId) {
+        List<WorkReviewLikeEntity> workReviewLikeEntities = workReviewLikeRepository.findByWorkReviewId(workReviewId);
+        List<Long> likedByUserIds = new ArrayList<>();
+        boolean hasCurrentUserLiked = false;
+        for (WorkReviewLikeEntity workReviewLikeEntity : workReviewLikeEntities) {
+            likedByUserIds.add(workReviewLikeEntity.getUserEntity().getId());
+            if (workReviewLikeEntity.getUserEntity().getId().equals(userId)) {
+                hasCurrentUserLiked = true;
+            }
+        }
+        return new WorkReviewLikes(workReviewId, hasCurrentUserLiked, likedByUserIds);
+    }
+
+    @Transactional
+    public void addLike(Long userId, Long workReviewId) {
+        workReviewLikeRepository.findByUserIdAndWorkReviewId(userId, workReviewId)
+                .ifPresent(workReviewLikeEntity -> {
+                    throw new WorkReviewLikeAlreadyExists(workReviewLikeEntity.getId());
+                });
+        WorkReviewLikeEntity workReviewLikeEntity = new WorkReviewLikeEntity();
+        workReviewLikeEntity.setUserEntity(userService.getReferenceById(userId));
+        workReviewLikeEntity.setWorkReviewEntity(workReviewRepository.getReferenceById(workReviewId));
+        workReviewLikeRepository.save(workReviewLikeEntity);
+    }
+
+    @Transactional
+    public void removeLike(Long userId, Long workReviewId) {
+        WorkReviewLikeEntity workReviewLikeEntity = workReviewLikeRepository.findByUserIdAndWorkReviewId(userId, workReviewId)
+                .orElseThrow(() -> new WorkReviewLikeDoesNotExist(userId, workReviewId));
+        workReviewLikeRepository.delete(workReviewLikeEntity);
     }
 }

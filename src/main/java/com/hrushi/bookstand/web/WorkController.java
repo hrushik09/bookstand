@@ -7,10 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/works")
@@ -60,5 +57,28 @@ class WorkController {
         model.addAttribute("id", workId);
         model.addAttribute("currentUserReview", review);
         return "works/showuserreview";
+    }
+
+    @GetMapping("/reviews/{id}")
+    String getLikesForReview(@PathVariable("id") Long workReviewId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
+        WorkReviewLikes workReviewLikes = workService.getLikesForReview(securedUser.id(), workReviewId);
+        model.addAttribute("workReviewLikes", workReviewLikes);
+        return "works/reviewlikes";
+    }
+
+    @PutMapping("/reviews/{id}/like")
+    String addLike(@PathVariable("id") Long workReviewId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
+        workService.addLike(securedUser.id(), workReviewId);
+        WorkReviewLikes workReviewLikes = workService.getLikesForReview(securedUser.id(), workReviewId);
+        model.addAttribute("workReviewLikes", workReviewLikes);
+        return "works/reviewlikes";
+    }
+
+    @DeleteMapping("/reviews/{id}/unlike")
+    String removeLike(@PathVariable("id") Long workReviewId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
+        workService.removeLike(securedUser.id(), workReviewId);
+        WorkReviewLikes workReviewLikes = workService.getLikesForReview(securedUser.id(), workReviewId);
+        model.addAttribute("workReviewLikes", workReviewLikes);
+        return "works/reviewlikes";
     }
 }
