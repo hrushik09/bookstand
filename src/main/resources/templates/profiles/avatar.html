@@ -1,0 +1,5 @@
+<div>
+    <i class="bi" th:classappend="${avatar.classToAppendToIcon()}"></i>
+    <div th:text="${avatar.firstName()} + ' ' + ${avatar.lastName()}"></div>
+    <div th:text="${avatar.country()}"></div>
+</div>

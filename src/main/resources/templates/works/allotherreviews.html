@@ -5,8 +5,8 @@
         <div class="card mb-3">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <div th:text="${otherreview.userId()}"></div>
-                    <img alt="user image" class="img-fluid rounded-start" src="...">
+                    <div hx-swap="outerHTML" hx-target="this" hx-trigger="load"
+                         th:attr="hx-get=|/avatars/${otherreview.userId()}|"></div>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">

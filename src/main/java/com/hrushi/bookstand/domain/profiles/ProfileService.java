@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class ProfileService {
+    private static final String DEFAULT_AVATAR_CLASS_TO_APPEND = "bi-person-x";
     private final ProfileRepository profileRepository;
     private final UserService userService;
 
@@ -40,5 +41,11 @@ public class ProfileService {
         UserEntity userEntity = userService.getReferenceById(cmd.userId());
         Icon icon = Icon.random();
         return new ProfileEntity(userEntity, icon);
+    }
+
+    public Avatar findAvatar(Long userId) {
+        return profileRepository.findByUserId(userId)
+                .map(profileEntity -> new Avatar(profileEntity.getUserEntity().getId(), profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getCountry().displayName(), profileEntity.getIcon().classToAppend()))
+                .orElse(new Avatar(userId, "", "", "", DEFAULT_AVATAR_CLASS_TO_APPEND));
     }
 }
