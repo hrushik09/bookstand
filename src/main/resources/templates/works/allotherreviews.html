@@ -1,5 +1,5 @@
 <div th:fragment="allotherreviews(allotherreviews)">
-    <h6>Other Reviews</h6>
+    <h6 th:if="${!allotherreviews.isEmpty()}">Other Reviews</h6>
     <div th:each="otherreview : ${allotherreviews}">
         <!--/*@thymesVar id="otherreview" type="com.hrushi.bookstand.domain.works.WorkReview"*/-->
         <div class="card mb-3">
