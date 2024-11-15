@@ -3,6 +3,8 @@ package com.hrushi.bookstand.domain.works;
 import com.hrushi.bookstand.domain.authors.AuthorEntity;
 import com.hrushi.bookstand.domain.authors.AuthorService;
 import com.hrushi.bookstand.domain.users.UserService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +73,8 @@ public class WorkService {
     }
 
     private List<WorkReview> getAllOtherReviews(Long userId, Long workId) {
-        return workReviewRepository.findByWorkId(workId).stream()
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "updatedAt"));
+        return workReviewRepository.findByWorkId(workId, pageRequest).stream()
                 .filter(workReviewEntity -> !workReviewEntity.getUserEntity().getId().equals(userId))
                 .map(workReviewEntity -> new WorkReview(workReviewEntity.getId(), workReviewEntity.getUserEntity().getId(), workReviewEntity.getReview(), workReviewEntity.getCreatedAt(), workReviewEntity.getUpdatedAt()))
                 .toList();
