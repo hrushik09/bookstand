@@ -6,20 +6,25 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
-            <img alt="work image" class="img-fluid rounded-start" th:src="${work.coverUrl()}">
+            <div class="card">
+                <img alt="work image" class="img-fluid rounded-start" th:src="${work.coverUrl()}">
+            </div>
         </div>
         <div class="col-md-8">
-            <div class="card-body">
-                <h2 class="card-title" th:text="${work.title()}"></h2>
-                <h5 th:if="${work.subtitle() != null}" th:text="${work.subtitle()}"></h5>
-                <ul>
-                    <li th:each="author : ${work.authors()}">
-                        <a th:href="@{/authors/{id}(id=${author.id()})}"><span th:text="${author.name()}"></span></a>
-                    </li>
-                </ul>
-                <div th:replace="~{works/rating::rating(id=${work.id()},rating=${work.rating()})}"></div>
-                <div th:replace="~{works/review::review(id=${work.id()},currentUserReview=${work.currentUserReview()})}"></div>
-                <div th:replace="~{works/allotherreviews::allotherreviews(allotherreviews=${work.allOtherReviews()})}"></div>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${work.title()}"></h2>
+                    <h5 th:if="${work.subtitle() != null}" th:text="${work.subtitle()}"></h5>
+                    <ul>
+                        <li th:each="author : ${work.authors()}">
+                            <a th:href="@{/authors/{id}(id=${author.id()})}"><span
+                                    th:text="${author.name()}"></span></a>
+                        </li>
+                    </ul>
+                    <div th:replace="~{works/rating::rating(id=${work.id()},rating=${work.rating()})}"></div>
+                    <div th:replace="~{works/review::review(id=${work.id()},currentUserReview=${work.currentUserReview()})}"></div>
+                    <div th:replace="~{works/allotherreviews::allotherreviews(allotherreviews=${work.allOtherReviews()})}"></div>
+                </div>
             </div>
         </div>
     </div>
