@@ -1,6 +1,7 @@
 package com.hrushi.bookstand.domain.profiles;
 
 import com.hrushi.bookstand.domain.Country;
+import com.hrushi.bookstand.domain.Icon;
 import com.hrushi.bookstand.domain.users.UserEntity;
 import jakarta.persistence.*;
 
@@ -11,7 +12,7 @@ class ProfileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", unique = true, nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", unique = true, nullable = false, updatable = false)
     private UserEntity userEntity;
     @Column(nullable = false)
     private String firstName;
@@ -23,6 +24,17 @@ class ProfileEntity {
     @Column(unique = true)
     private String email;
     private String bio;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Icon icon;
+
+    protected ProfileEntity() {
+    }
+
+    public ProfileEntity(UserEntity userEntity, Icon icon) {
+        this.userEntity = userEntity;
+        this.icon = icon;
+    }
 
     public Long getId() {
         return id;
@@ -78,5 +90,13 @@ class ProfileEntity {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public Icon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Icon icon) {
+        this.icon = icon;
     }
 }

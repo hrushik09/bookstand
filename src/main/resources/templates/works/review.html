@@ -1,0 +1,9 @@
+<div class="mb-3" id="review" th:fragment="review(id,currentUserReview)">
+    <h6>Your Review</h6>
+    <div th:if="${currentUserReview == null}">
+        <div th:replace="~{works/edituserreview::edituserreview(id=${id},currentUserReview=${currentUserReview})}"></div>
+    </div>
+    <div th:if="${currentUserReview != null}">
+        <div th:replace="~{works/showuserreview::showuserreview(id=${id},currentUserReview=${currentUserReview})}"></div>
+    </div>
+</div>

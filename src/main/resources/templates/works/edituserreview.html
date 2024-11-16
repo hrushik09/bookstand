@@ -1,0 +1,12 @@
+<form hx-swap="outerHTML" hx-target="this" th:attr="hx-put=|/works/${id}/review|"
+      th:fragment="edituserreview(id,currentUserReview)">
+    <div class="mb-3">
+        <label>
+            <textarea class="form-control" cols="60" id="reviewTextArea" name="review" placeholder="What do you think?"
+                      rows="4"
+                      th:text="${currentUserReview}"></textarea>
+        </label>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn btn-primary" th:attr="hx-get=|/works/${id}/review|">Cancel</button>
+</form>

@@ -1,0 +1,12 @@
+CREATE TABLE work_reviews
+(
+    id         BIGINT        NOT NULL AUTO_INCREMENT,
+    user_id    BIGINT        NOT NULL,
+    work_id    BIGINT        NOT NULL,
+    review     VARCHAR(2000) NOT NULL,
+    created_at TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT PK_work_reviews_id PRIMARY KEY (id),
+    CONSTRAINT FK_work_reviews_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_work_reviews_work_id FOREIGN KEY (work_id) REFERENCES works (id) ON DELETE CASCADE ON UPDATE CASCADE
+);

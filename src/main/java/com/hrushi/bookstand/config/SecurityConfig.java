@@ -15,7 +15,7 @@ class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/webjars/**", "/signup/**").permitAll()
+                        .requestMatchers("/webjars/**", "/signup/**", "/css/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

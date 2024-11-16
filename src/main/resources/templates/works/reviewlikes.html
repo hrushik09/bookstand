@@ -1,0 +1,30 @@
+<div hx-swap="outerHTML" hx-target="this">
+    <i class="bi bi-heart" th:attr="hx-put=|/works/reviews/${workReviewLikes.workReviewId()}/like|"
+       th:if="${!workReviewLikes.hasCurrentUserLiked()}"></i>
+    <i class="bi bi-heart-fill" th:attr="hx-delete=|/works/reviews/${workReviewLikes.workReviewId()}/unlike|"
+       th:if="${workReviewLikes.hasCurrentUserLiked()}"></i>
+    <span>&nbsp;</span>
+    <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+            th:attr="data-bs-target='#likedByUserModal' + ${workReviewLikes.workReviewId()}"
+            th:if="${!workReviewLikes.likedByUserIds().isEmpty()}"
+            th:text="${workReviewLikes.likedByUserIds().size()} + ' likes'" type="button"></button>
+    <div aria-hidden="true" class="modal fade" tabindex="-1"
+         th:id="'likedByUserModal' + ${workReviewLikes.workReviewId()}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Liked By Users</h1>
+                </div>
+                <div class="modal-body">
+                    <div th:each="likedByUserId : ${workReviewLikes.likedByUserIds()}">
+                        <div hx-swap="outerHTML" hx-target="this" hx-trigger="load"
+                             th:attr="hx-get=|/avatars/likedByUser/${likedByUserId}|"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

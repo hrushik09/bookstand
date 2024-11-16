@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "work_ratings")
-class WorkRatingEntity {
+@Table(name = "work_reviews")
+class WorkReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,16 +18,16 @@ class WorkRatingEntity {
     @JoinColumn(name = "work_id", referencedColumnName = "id", nullable = false, updatable = false)
     private WorkEntity workEntity;
     @Column(nullable = false)
-    private Integer rating;
+    private String review;
     @Column(nullable = false, insertable = false, updatable = false)
     private Instant createdAt;
     @Column(nullable = false, insertable = false, updatable = false)
     private Instant updatedAt;
 
-    protected WorkRatingEntity() {
+    protected WorkReviewEntity() {
     }
 
-    WorkRatingEntity(UserEntity userEntity, WorkEntity workEntity) {
+    WorkReviewEntity(UserEntity userEntity, WorkEntity workEntity) {
         this.userEntity = userEntity;
         this.workEntity = workEntity;
     }
@@ -44,24 +44,24 @@ class WorkRatingEntity {
         return userEntity;
     }
 
-    public void setUserEntity(UserEntity userId) {
-        this.userEntity = userId;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public WorkEntity getWorkEntity() {
         return workEntity;
     }
 
-    public void setWorkEntity(WorkEntity workId) {
-        this.workEntity = workId;
+    public void setWorkEntity(WorkEntity workEntity) {
+        this.workEntity = workEntity;
     }
 
-    public Integer getRating() {
-        return rating;
+    public String getReview() {
+        return review;
     }
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public Instant getCreatedAt() {

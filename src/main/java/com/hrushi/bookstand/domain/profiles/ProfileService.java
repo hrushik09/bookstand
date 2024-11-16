@@ -1,16 +1,16 @@
 package com.hrushi.bookstand.domain.profiles;
 
 import com.hrushi.bookstand.domain.Country;
+import com.hrushi.bookstand.domain.Icon;
 import com.hrushi.bookstand.domain.users.UserEntity;
 import com.hrushi.bookstand.domain.users.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional(readOnly = true)
 public class ProfileService {
+    private static final String DEFAULT_AVATAR_CLASS_TO_APPEND = "bi-person-x";
     private final ProfileRepository profileRepository;
     private final UserService userService;
 
@@ -20,28 +20,38 @@ public class ProfileService {
     }
 
     public Profile findProfile(Long userId) {
-        ProfileEntity profileEntity = profileRepository.findByUserId(userId)
-                .orElse(new ProfileEntity());
-        String countryName = profileEntity.getCountry() == null ? "" : profileEntity.getCountry().name();
-        return new Profile(profileEntity.getFirstName(), profileEntity.getLastName(), countryName, profileEntity.getEmail(), profileEntity.getBio());
+        return profileRepository.findByUserId(userId)
+                .map(profileEntity -> new Profile(profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getCountry().displayName(), profileEntity.getEmail(), profileEntity.getBio(), profileEntity.getIcon().classToAppend()))
+                .orElse(Profile.dummyProfile());
     }
 
     @Transactional
     public void updateProfile(UpdateProfileCommand cmd) {
-        Optional<ProfileEntity> optionalProfile = profileRepository.findByUserId(cmd.userId());
-        ProfileEntity profileEntity;
-        if (optionalProfile.isPresent()) {
-            profileEntity = optionalProfile.get();
-        } else {
-            profileEntity = new ProfileEntity();
-            UserEntity userEntity = userService.getReferenceById(cmd.userId());
-            profileEntity.setUserEntity(userEntity);
-        }
+        ProfileEntity profileEntity = profileRepository.findByUserId(cmd.userId())
+                .orElse(createNewProfileEntity(cmd));
         profileEntity.setFirstName(cmd.firstName());
         profileEntity.setLastName(cmd.lastName());
         profileEntity.setCountry(Country.valueOf(cmd.country()));
         profileEntity.setEmail(cmd.email());
         profileEntity.setBio(cmd.bio());
         profileRepository.save(profileEntity);
+    }
+
+    private ProfileEntity createNewProfileEntity(UpdateProfileCommand cmd) {
+        UserEntity userEntity = userService.getReferenceById(cmd.userId());
+        Icon icon = Icon.random();
+        return new ProfileEntity(userEntity, icon);
+    }
+
+    public Avatar findAvatar(Long userId) {
+        return profileRepository.findByUserId(userId)
+                .map(profileEntity -> new Avatar(profileEntity.getUserEntity().getId(), profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getCountry().displayName(), profileEntity.getIcon().classToAppend()))
+                .orElse(new Avatar(userId, "", "", "", DEFAULT_AVATAR_CLASS_TO_APPEND));
+    }
+
+    public LikedByUserAvatar findLikedByUserAvatar(Long userId) {
+        return profileRepository.findByUserId(userId)
+                .map(profileEntity -> new LikedByUserAvatar(profileEntity.getUserEntity().getId(), profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getIcon().classToAppend()))
+                .orElse(new LikedByUserAvatar(userId, "", "", DEFAULT_AVATAR_CLASS_TO_APPEND));
     }
 }

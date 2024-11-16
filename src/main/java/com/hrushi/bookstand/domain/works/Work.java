@@ -8,6 +8,7 @@ public record Work(
         String subtitle,
         String coverUrl,
         Integer rating,
-        List<WorkAuthor> authors
-) {
+        String currentUserReview,
+        List<WorkAuthor> authors,
+        List<WorkReview> allOtherReviews) {
 }
