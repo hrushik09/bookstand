@@ -26,6 +26,14 @@ class WorkShelfEntity {
     @Column(nullable = false, insertable = false, updatable = false)
     private Instant updatedAt;
 
+    protected WorkShelfEntity() {
+    }
+
+    public WorkShelfEntity(UserEntity userEntity, WorkEntity workEntity) {
+        this.userEntity = userEntity;
+        this.workEntity = workEntity;
+    }
+
     public Long getId() {
         return id;
     }

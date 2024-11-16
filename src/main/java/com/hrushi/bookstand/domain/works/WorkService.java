@@ -1,5 +1,6 @@
 package com.hrushi.bookstand.domain.works;
 
+import com.hrushi.bookstand.domain.Shelf;
 import com.hrushi.bookstand.domain.authors.AuthorEntity;
 import com.hrushi.bookstand.domain.authors.AuthorService;
 import com.hrushi.bookstand.domain.users.UserService;
@@ -25,14 +26,16 @@ public class WorkService {
     private final UserService userService;
     private final WorkReviewRepository workReviewRepository;
     private final WorkReviewLikeRepository workReviewLikeRepository;
+    private final WorkShelfRepository workShelfRepository;
 
-    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository, UserService userService, WorkReviewRepository workReviewRepository, WorkReviewLikeRepository workReviewLikeRepository) {
+    WorkService(WorkRepository workRepository, AuthorService authorService, WorkRatingRepository workRatingRepository, UserService userService, WorkReviewRepository workReviewRepository, WorkReviewLikeRepository workReviewLikeRepository, WorkShelfRepository workShelfRepository) {
         this.workRepository = workRepository;
         this.authorService = authorService;
         this.workRatingRepository = workRatingRepository;
         this.userService = userService;
         this.workReviewRepository = workReviewRepository;
         this.workReviewLikeRepository = workReviewLikeRepository;
+        this.workShelfRepository = workShelfRepository;
     }
 
     @Transactional
@@ -72,7 +75,14 @@ public class WorkService {
         List<WorkReview> allOtherReviews = getAllOtherReviews(userId, workId);
         String coverUrl = getCoverUrl(workEntity);
         List<WorkAuthor> workAuthors = getWorkAuthors(workEntity);
-        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, currentUserReview, workAuthors, allOtherReviews);
+        String shelf = getShelf(userId, workId);
+        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, currentUserReview, workAuthors, allOtherReviews, shelf);
+    }
+
+    private String getShelf(Long userId, Long workId) {
+        return workShelfRepository.findByUserIdAndWorkId(userId, workId)
+                .map(workShelfEntity -> workShelfEntity.getShelf().displayName())
+                .orElse("");
     }
 
     private List<WorkReview> getAllOtherReviews(Long userId, Long workId) {
@@ -141,5 +151,15 @@ public class WorkService {
         WorkReviewLikeEntity workReviewLikeEntity = workReviewLikeRepository.findByUserIdAndWorkReviewId(userId, workReviewId)
                 .orElseThrow(() -> new WorkReviewLikeDoesNotExist(userId, workReviewId));
         workReviewLikeRepository.delete(workReviewLikeEntity);
+    }
+
+    @Transactional
+    public String updateShelf(UpdateShelfCommand cmd) {
+        WorkShelfEntity workShelfEntity = workShelfRepository.findByUserIdAndWorkId(cmd.userId(), cmd.workId())
+                .orElse(new WorkShelfEntity(userService.getReferenceById(cmd.userId()), workRepository.getReferenceById(cmd.workId())));
+        Shelf shelf = Shelf.valueOf(cmd.shelf());
+        workShelfEntity.setShelf(shelf);
+        workShelfRepository.save(workShelfEntity);
+        return shelf.displayName();
     }
 }
