@@ -4,6 +4,23 @@
     <i class="bi bi-heart-fill" th:attr="hx-delete=|/works/reviews/${workReviewLikes.workReviewId()}/unlike|"
        th:if="${workReviewLikes.hasCurrentUserLiked()}"></i>
     <span>&nbsp;</span>
-    <span th:if="${!workReviewLikes.likedByUserIds().isEmpty()}"
-          th:text="'Liked by ' + ${workReviewLikes.likedByUserIds().size()} + ' users'"></span>
+    <button class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target=|#likedByUserModal${workReviewLikes.workReviewId()}|"
+            th:if="${!workReviewLikes.likedByUserIds().isEmpty()}" th:text="'Liked by ' + ${workReviewLikes.likedByUserIds().size()} + ' users'"
+            type="button"></button>
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
+         tabindex="-1" th:id="'likedByUserModal' + ${workReviewLikes.workReviewId()}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body" th:text="${workReviewLikes.likedByUserIds()}"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary" type="button">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
