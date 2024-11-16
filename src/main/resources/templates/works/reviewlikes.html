@@ -4,7 +4,8 @@
     <i class="bi bi-heart-fill" th:attr="hx-delete=|/works/reviews/${workReviewLikes.workReviewId()}/unlike|"
        th:if="${workReviewLikes.hasCurrentUserLiked()}"></i>
     <span>&nbsp;</span>
-    <button class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target=|#likedByUserModal${workReviewLikes.workReviewId()}|"
+    <button class="btn btn-primary" data-bs-toggle="modal"
+            th:attr="data-bs-target='#likedByUserModal' + ${workReviewLikes.workReviewId()}"
             th:if="${!workReviewLikes.likedByUserIds().isEmpty()}" th:text="'Liked by ' + ${workReviewLikes.likedByUserIds().size()} + ' users'"
             type="button"></button>
     <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
