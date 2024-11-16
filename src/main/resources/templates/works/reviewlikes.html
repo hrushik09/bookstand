@@ -1,11 +1,9 @@
 <div hx-swap="outerHTML" hx-target="this">
-    <div th:if="${!workReviewLikes.hasCurrentUserLiked()}">
-        <i class="bi bi-heart" th:attr="hx-put=|/works/reviews/${workReviewLikes.workReviewId()}/like|"></i>
-    </div>
-    <div th:if="${workReviewLikes.hasCurrentUserLiked()}">
-        <i class="bi bi-heart-fill" th:attr="hx-delete=|/works/reviews/${workReviewLikes.workReviewId()}/unlike|"></i>
-    </div>
-    <div th:if="${!workReviewLikes.likedByUserIds().isEmpty()}">
-        <span th:text="'Liked by ' + ${workReviewLikes.likedByUserIds().size()} + ' users'"></span>
-    </div>
+    <i class="bi bi-heart" th:attr="hx-put=|/works/reviews/${workReviewLikes.workReviewId()}/like|"
+       th:if="${!workReviewLikes.hasCurrentUserLiked()}"></i>
+    <i class="bi bi-heart-fill" th:attr="hx-delete=|/works/reviews/${workReviewLikes.workReviewId()}/unlike|"
+       th:if="${workReviewLikes.hasCurrentUserLiked()}"></i>
+    <span>&nbsp;</span>
+    <span th:if="${!workReviewLikes.likedByUserIds().isEmpty()}"
+          th:text="'Liked by ' + ${workReviewLikes.likedByUserIds().size()} + ' users'"></span>
 </div>
