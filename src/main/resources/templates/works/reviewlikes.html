@@ -4,9 +4,8 @@
             <i class="bi bi-heart"></i>
         </button>
     </div>
-    <div th:attr="hx-delete=|/works/reviews/${workReviewLikes.workReviewId()}/unlike|"
-         th:if="${workReviewLikes.hasCurrentUserLiked()}">
-        <button class="btn btn-secondary">
+    <div th:if="${workReviewLikes.hasCurrentUserLiked()}">
+        <button class="btn btn-secondary" th:attr="hx-delete=|/works/reviews/${workReviewLikes.workReviewId()}/unlike|">
             <i class="bi bi-heart-fill"></i>
         </button>
     </div>
