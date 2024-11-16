@@ -48,4 +48,10 @@ public class ProfileService {
                 .map(profileEntity -> new Avatar(profileEntity.getUserEntity().getId(), profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getCountry().displayName(), profileEntity.getIcon().classToAppend()))
                 .orElse(new Avatar(userId, "", "", "", DEFAULT_AVATAR_CLASS_TO_APPEND));
     }
+
+    public LikedByUserAvatar findLikedByUserAvatar(Long userId) {
+        return profileRepository.findByUserId(userId)
+                .map(profileEntity -> new LikedByUserAvatar(profileEntity.getUserEntity().getId(), profileEntity.getFirstName(), profileEntity.getLastName(), profileEntity.getIcon().classToAppend()))
+                .orElse(new LikedByUserAvatar(userId, "", "", DEFAULT_AVATAR_CLASS_TO_APPEND));
+    }
 }

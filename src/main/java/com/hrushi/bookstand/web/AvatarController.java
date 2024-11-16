@@ -1,6 +1,7 @@
 package com.hrushi.bookstand.web;
 
 import com.hrushi.bookstand.domain.profiles.Avatar;
+import com.hrushi.bookstand.domain.profiles.LikedByUserAvatar;
 import com.hrushi.bookstand.domain.profiles.ProfileService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,5 +23,12 @@ class AvatarController {
         Avatar avatar = profileService.findAvatar(userId);
         model.addAttribute("avatar", avatar);
         return "profiles/avatar";
+    }
+
+    @GetMapping("/likedByUser/{id}")
+    String likedByUser(@PathVariable("id") Long userId, Model model) {
+        LikedByUserAvatar likedByUserAvatar = profileService.findLikedByUserAvatar(userId);
+        model.addAttribute("likedByUserAvatar", likedByUserAvatar);
+        return "works/likedbyuseravatar";
     }
 }
