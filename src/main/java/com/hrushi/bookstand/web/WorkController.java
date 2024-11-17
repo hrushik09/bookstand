@@ -81,4 +81,13 @@ class WorkController {
         model.addAttribute("workReviewLikes", workReviewLikes);
         return "works/reviewlikes";
     }
+
+    @PutMapping("/{id}/shelf")
+    String updateShelf(@PathVariable("id") Long workId, @Valid UpdateShelfRequest request, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
+        UpdateShelfCommand cmd = new UpdateShelfCommand(securedUser.id(), workId, request.shelf());
+        String shelf = workService.updateShelf(cmd);
+        model.addAttribute("id", workId);
+        model.addAttribute("shelf", shelf);
+        return "works/shelf";
+    }
 }

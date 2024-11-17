@@ -10,5 +10,9 @@ public record Work(
         Integer rating,
         String currentUserReview,
         List<WorkAuthor> authors,
-        List<WorkReview> allOtherReviews) {
+        List<WorkReview> allOtherReviews,
+        String shelf,
+        Long currentlyReading,
+        Long wantToRead
+) {
 }

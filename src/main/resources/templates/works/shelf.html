@@ -1,0 +1,15 @@
+<div class="mb-3" id="shelf" th:fragment="shelf(id,shelf)">
+    <label>Add To Shelf
+        <select class="form-select" hx-swap="outerHTML" hx-target="#shelf" name="shelf" th:attr="hx-put=|/works/${id}/shelf|"
+                th:value="${shelf}">
+            <option>Select</option>
+            <option th:selected="${shelf.equalsIgnoreCase('WANT TO READ')}" value="WANT_TO_READ">Want to Read</option>
+            <option th:selected="${shelf.equalsIgnoreCase('CURRENTLY READING')}" value="CURRENTLY_READING">Currently
+                Reading
+            </option>
+            <option th:selected="${shelf.equalsIgnoreCase('READ')}" value="READ">Read</option>
+            <option th:selected="${shelf.equalsIgnoreCase('DID NOT FINISH')}" value="DID_NOT_FINISH">Did Not Finish
+            </option>
+        </select>
+    </label>
+</div>

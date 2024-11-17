@@ -21,6 +21,8 @@
                                     th:text="${author.name()}"></span></a>
                         </li>
                     </ul>
+                    <div th:replace="~{works/shelf::shelf(id=${work.id()},shelf=${work.shelf()})}"></div>
+                    <div th:replace="works/shelffromothers::shelffromothers(currentlyReading=${work.currentlyReading()},wantToRead=${work.wantToRead()})"></div>
                     <div th:replace="~{works/rating::rating(id=${work.id()},rating=${work.rating()})}"></div>
                     <div th:replace="~{works/review::review(id=${work.id()},currentUserReview=${work.currentUserReview()})}"></div>
                     <div th:replace="~{works/allotherreviews::allotherreviews(allotherreviews=${work.allOtherReviews()})}"></div>
