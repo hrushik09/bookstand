@@ -76,7 +76,9 @@ public class WorkService {
         String coverUrl = getCoverUrl(workEntity);
         List<WorkAuthor> workAuthors = getWorkAuthors(workEntity);
         String shelf = getShelf(userId, workId);
-        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, currentUserReview, workAuthors, allOtherReviews, shelf);
+        Long currentlyReading = workShelfRepository.findWorkShelfCount(workId, Shelf.CURRENTLY_READING);
+        Long wantToRead = workShelfRepository.findWorkShelfCount(workId, Shelf.WANT_TO_READ);
+        return new Work(workEntity.getId(), workEntity.getTitle(), workEntity.getSubtitle(), coverUrl, rating, currentUserReview, workAuthors, allOtherReviews, shelf, currentlyReading, wantToRead);
     }
 
     private String getShelf(Long userId, Long workId) {

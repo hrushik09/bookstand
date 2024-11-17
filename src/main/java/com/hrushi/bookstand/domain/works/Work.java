@@ -11,5 +11,8 @@ public record Work(
         String currentUserReview,
         List<WorkAuthor> authors,
         List<WorkReview> allOtherReviews,
-        String shelf) {
+        String shelf,
+        Long currentlyReading,
+        Long wantToRead
+) {
 }
