@@ -4,6 +4,7 @@ import com.hrushi.bookstand.domain.Shelf;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 interface WorkShelfRepository extends JpaRepository<WorkShelfEntity, Long> {
@@ -15,4 +16,10 @@ interface WorkShelfRepository extends JpaRepository<WorkShelfEntity, Long> {
                         WHERE ws.workEntity.id = :workId AND ws.shelf = :shelf
             """)
     Long findWorkShelfCount(Long workId, Shelf shelf);
+
+    @Query("""
+            SELECT ws FROM WorkShelfEntity ws JOIN FETCH ws.workEntity
+                         WHERE ws.userEntity.id = :userId AND ws.shelf = :shelf
+            """)
+    List<WorkShelfEntity> findByUserIdAndShelf(Long userId, Shelf shelf);
 }

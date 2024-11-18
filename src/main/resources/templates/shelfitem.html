@@ -1,0 +1,10 @@
+<div class="col-sm-2" th:each="item : ${items}" th:fragment="shelfitem(items)">
+    <div class="card">
+        <a th:href="|/works/${item.workId()}|">
+            <img alt="Shelf Item Cover" class="card-img-top" th:src="${item.coverUrl()}">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${item.title()}"></h5>
+            </div>
+        </a>
+    </div>
+</div>

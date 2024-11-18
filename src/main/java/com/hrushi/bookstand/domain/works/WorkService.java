@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class WorkService {
     private static final String BASE_URL = "https://covers.openlibrary.org/b/id/";
-    private static final String SUFFIX = "-L.jpg";
+    private static final String L_SUFFIX = "-L.jpg";
+    private static final String S_SUFFIX = "-S.jpg";
     private final WorkRepository workRepository;
     private final AuthorService authorService;
     private final WorkRatingRepository workRatingRepository;
@@ -60,11 +61,11 @@ public class WorkService {
                 .toList();
     }
 
-    private static String getCoverUrl(WorkEntity workEntity) {
+    private static String getCoverUrl(WorkEntity workEntity, String suffix) {
         if (workEntity.getCoverId() == null) {
             return "";
         }
-        return BASE_URL + workEntity.getCoverId() + SUFFIX;
+        return BASE_URL + workEntity.getCoverId() + suffix;
     }
 
     public Work getWork(Long userId, Long workId) {
@@ -73,7 +74,7 @@ public class WorkService {
         Integer rating = getRating(userId, workId);
         String currentUserReview = getReview(userId, workId);
         List<WorkReview> allOtherReviews = getAllOtherReviews(userId, workId);
-        String coverUrl = getCoverUrl(workEntity);
+        String coverUrl = getCoverUrl(workEntity, L_SUFFIX);
         List<WorkAuthor> workAuthors = getWorkAuthors(workEntity);
         String shelf = getShelf(userId, workId);
         Long currentlyReading = workShelfRepository.findWorkShelfCount(workId, Shelf.CURRENTLY_READING);
@@ -163,5 +164,18 @@ public class WorkService {
         workShelfEntity.setShelf(shelf);
         workShelfRepository.save(workShelfEntity);
         return shelf.displayName();
+    }
+
+    public AllShelves getAllShelves(Long userId) {
+        List<ShelfItem> currentlyReading = getShelfFor(userId, Shelf.CURRENTLY_READING);
+        List<ShelfItem> wantToRead = getShelfFor(userId, Shelf.WANT_TO_READ);
+        return new AllShelves(currentlyReading, wantToRead);
+    }
+
+    private List<ShelfItem> getShelfFor(Long userId, Shelf shelf) {
+        return workShelfRepository.findByUserIdAndShelf(userId, shelf).stream()
+                .limit(10)
+                .map(workShelfEntity -> new ShelfItem(workShelfEntity.getWorkEntity().getId(), getCoverUrl(workShelfEntity.getWorkEntity(), S_SUFFIX), workShelfEntity.getWorkEntity().getTitle()))
+                .toList();
     }
 }

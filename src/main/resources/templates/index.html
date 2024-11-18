@@ -3,7 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <body layout:fragment="content">
-<h1>Hello World</h1>
-<div th:replace="~{tempauth::tempauth}"></div>
+<h4 th:if="${!allShelves.currentlyReading().isEmpty()}">Currently Reading</h4>
+<div class="row">
+    <div th:if="${!allShelves.currentlyReading().isEmpty()}"
+         th:replace="~{shelfitem::shelfitem(items=${allShelves.currentlyReading()})}"></div>
+</div>
+<h4 th:if="${!allShelves.wantToRead().isEmpty()}">Want To Read</h4>
+<div class="row">
+    <div th:if="${!allShelves.wantToRead().isEmpty()}"
+         th:replace="~{shelfitem::shelfitem(items=${allShelves.wantToRead()})}"></div>
+</div>
 </body>
 </html>
