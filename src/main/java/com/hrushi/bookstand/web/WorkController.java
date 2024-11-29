@@ -3,11 +3,15 @@ package com.hrushi.bookstand.web;
 import com.hrushi.bookstand.domain.users.SecuredUser;
 import com.hrushi.bookstand.domain.works.*;
 import jakarta.validation.Valid;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/works")
@@ -22,6 +26,10 @@ class WorkController {
     String getWork(@PathVariable("id") Long workId, Model model, @AuthenticationPrincipal SecuredUser securedUser) {
         Work work = workService.getWork(securedUser.id(), workId);
         model.addAttribute("work", work);
+        Locale locale = LocaleContextHolder.getLocale();
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+        String format = numberFormat.format(15678.43);
+        model.addAttribute("localeExample", format);
         return "works/index";
     }
 
