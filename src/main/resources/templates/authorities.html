@@ -5,12 +5,12 @@
 >
 <body layout:fragment="content">
 <div th:replace="~{tempauth::tempauth}"></div>
-<h1>Authorities</h1>
+<h1 th:text="#{label.authorities}"></h1>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Value</th>
+        <th scope="col" th:text="#{label.value}"></th>
     </tr>
     </thead>
     <tbody>
@@ -20,19 +20,15 @@
     </tr>
     </tbody>
 </table>
-<h1>Create Authority</h1>
+<h1 th:text="#{label.create.authority}"></h1>
 <form action="/authorities" method="post">
-    <div class="alert alert-danger" th:if="${param.error}">
-        Invalid Value. Please try a different one.
-    </div>
-    <div class="alert alert-success" th:if="${param.success}">
-        Created Successfully.
-    </div>
+    <div class="alert alert-danger" th:if="${param.error}" th:text="#{label.create.authority.error}"></div>
+    <div class="alert alert-success" th:if="${param.success}" th:text="#{label.create.authority.success}"></div>
     <div class="mb-3">
-        <label class="form-label" for="authorityValue">Value</label>
+        <label class="form-label" for="authorityValue" th:text="#{label.value}"></label>
         <input class="form-control" id="authorityValue" name="value" required type="text">
     </div>
-    <button class="btn btn-primary" type="submit">Create</button>
+    <button class="btn btn-primary" th:text="#{label.create}" type="submit"></button>
 </form>
 </body>
 </html>
