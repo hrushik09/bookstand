@@ -1,5 +1,5 @@
 <div class="mb-3" id="shelf" th:fragment="shelf(id,shelf)">
-    <label th:text="#{label.add.to.shelf}">
+    <label><span th:text="#{label.add.to.shelf}"></span>
         <select class="form-select" hx-swap="outerHTML" hx-target="#shelf" name="shelf" th:attr="hx-put=|/works/${id}/shelf|"
                 th:value="${shelf}">
             <option th:text="#{label.select}"></option>

@@ -1,5 +1,5 @@
 <div class="mb-3" id="rating" th:fragment="rating(id,rating)">
-    <label th:text="#{label.rating}">
+    <label><span th:text="#{label.rating}"></span>
         <select class="form-select" hx-swap="outerHTML" hx-target="#rating" name="rating"
                 th:attr="hx-put=|/works/${id}/rating|">
             <option th:selected="${rating} == null" th:text="#{label.select}"></option>
