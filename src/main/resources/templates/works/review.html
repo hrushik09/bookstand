@@ -1,5 +1,5 @@
 <div class="mb-3" id="review" th:fragment="review(id,currentUserReview)">
-    <h6>Your Review</h6>
+    <h6 th:text="#{label.your.review}"></h6>
     <div th:if="${currentUserReview == null}">
         <div th:replace="~{works/edituserreview::edituserreview(id=${id},currentUserReview=${currentUserReview})}"></div>
     </div>

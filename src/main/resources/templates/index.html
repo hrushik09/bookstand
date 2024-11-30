@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
 >
 <body layout:fragment="content">
-<h4 th:if="${!allShelves.currentlyReading().isEmpty()}">Currently Reading</h4>
+<h4 th:if="${!allShelves.currentlyReading().isEmpty()}" th:text="#{label.currently.reading}"></h4>
 <div class="row">
     <div th:if="${!allShelves.currentlyReading().isEmpty()}"
          th:replace="~{shelfitem::shelfitem(items=${allShelves.currentlyReading()})}"></div>
 </div>
-<h4 th:if="${!allShelves.wantToRead().isEmpty()}">Want To Read</h4>
+<h4 th:if="${!allShelves.wantToRead().isEmpty()}" th:text="#{label.want.to.read}"></h4>
 <div class="row">
     <div th:if="${!allShelves.wantToRead().isEmpty()}"
          th:replace="~{shelfitem::shelfitem(items=${allShelves.wantToRead()})}"></div>

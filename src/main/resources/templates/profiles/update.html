@@ -1,11 +1,11 @@
 <form hx-put="/profiles" hx-swap="outerHTML" hx-target="this">
     <div class="mb-3">
-        <label class="form-label" for="firstName">First Name</label>
+        <label class="form-label" for="firstName" th:text="#{label.firstName}"></label>
         <input class="form-control" id="firstName" name="firstName" required th:value="${profile.firstName()}"
                type="text">
-        <label class="form-label" for="lastName">Last Name</label>
+        <label class="form-label" for="lastName" th:text="#{label.lastName}"></label>
         <input class="form-control" id="lastName" name="lastName" required th:value="${profile.lastName()}" type="text">
-        <label for="country">Country</label>
+        <label for="country" th:text="#{label.country}"></label>
         <select class="form-select" id="country" name="country" required th:value="${profile.country()}">
             <option th:selected="${profile.country().equalsIgnoreCase('INDIA')}" value="INDIA">India</option>
             <option th:selected="${profile.country().equalsIgnoreCase('UNITED STATES')}" value="UNITED_STATES">United
@@ -22,10 +22,10 @@
             </option>
             <option th:selected="${profile.country().equalsIgnoreCase('BRAZIL')}" value="BRAZIL">Brazil</option>
         </select>
-        <label class="form-label" for="email">Email</label>
+        <label class="form-label" for="email" th:text="#{label.email}"></label>
         <input class="form-control" id="email" name="email" th:value="${profile.email()}" type="email">
-        <label class="form-label" for="bio">Bio</label>
+        <label class="form-label" for="bio" th:text="#{label.bio}"></label>
         <input class="form-control" id="bio" name="bio" th:value="${profile.bio()}" type="text">
     </div>
-    <button class="btn btn-primary" type="submit">Update</button>
+    <button class="btn btn-primary" th:text="#{label.update}" type="submit"></button>
 </form>

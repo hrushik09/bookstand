@@ -5,12 +5,12 @@
 >
 <body layout:fragment="content">
 <div th:replace="~{tempauth::tempauth}"></div>
-<h1>Users</h1>
+<h1 th:text="#{label.users}"></h1>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">username</th>
+        <th scope="col" th:text="#{label.username}"></th>
     </tr>
     </thead>
     <tbody>
