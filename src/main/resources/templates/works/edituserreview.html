@@ -2,11 +2,12 @@
       th:fragment="edituserreview(id,currentUserReview)">
     <div class="mb-3">
         <label>
-            <textarea class="form-control" cols="60" id="reviewTextArea" name="review" placeholder="What do you think?"
+            <textarea class="form-control" cols="60" id="reviewTextArea" name="review"
+                      th:placeholder="#{label.what.do.you.think}"
                       rows="4"
                       th:text="${currentUserReview}"></textarea>
         </label>
     </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-    <button class="btn btn-primary" th:attr="hx-get=|/works/${id}/review|">Cancel</button>
+    <button class="btn btn-primary" th:text="#{label.submit}" type="submit"></button>
+    <button class="btn btn-primary" th:attr="hx-get=|/works/${id}/review|" th:text="#{label.cancel}"></button>
 </form>

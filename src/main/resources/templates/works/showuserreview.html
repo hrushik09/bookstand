@@ -2,7 +2,7 @@
     <div class="card mb-3">
         <div class="card-body">
             <p class="card-text" th:text="${currentUserReview}"></p>
-            <a class="btn btn-primary" th:attr="hx-get=|/works/${id}/review/edit|">Click To Edit</a>
+            <a class="btn btn-primary" th:attr="hx-get=|/works/${id}/review/edit|" th:text="#{label.click.to.edit}"></a>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 <div th:fragment="allotherreviews(allotherreviews)">
-    <h6 th:if="${!allotherreviews.isEmpty()}">Other Reviews</h6>
+    <h6 th:if="${!allotherreviews.isEmpty()}" th:text="#{label.other.reviews}"></h6>
     <div th:each="otherreview : ${allotherreviews}">
         <!--/*@thymesVar id="otherreview" type="com.hrushi.bookstand.domain.works.WorkReview"*/-->
         <div class="card mb-3">
@@ -11,9 +11,11 @@
                 <div class="col-md-10">
                     <div class="card-body">
                         <div class="card-text" th:text="${otherreview.review()}"></div>
-                        <small class="card-text">Created At: <small class="text-body-secondary"
+                        <small class="card-text"><span th:text="#{label.created.at}"></span>: <small
+                                class="text-body-secondary"
                                                                     th:text="${otherreview.createdAt()}"></small></small>
-                        <small class="card-text">Updated At: <small class="text-body-secondary"
+                        <small class="card-text"><span th:text="#{label.updated.at}"></span>: <small
+                                class="text-body-secondary"
                                                                     th:text="${otherreview.updatedAt()}"></small></small>
                         <div hx-swap="outerHTML" hx-target="this" hx-trigger="load"
                              th:attr="hx-get=|/works/reviews/${otherreview.id()}|"></div>
