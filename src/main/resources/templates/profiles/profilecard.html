@@ -1,10 +1,10 @@
 <div hx-swap="outerHTML" hx-target="this" th:fragment="profilecard(profile)">
     <i class="avatar bi" th:classappend="${profile.classToAppendToIcon()}"
        th:if="${!profile.classToAppendToIcon().isEmpty()}"></i>
-    <div>FirstName: <span th:text="${profile.firstName()}"></span></div>
-    <div>LastName: <span th:text="${profile.lastName()}"></span></div>
-    <div>Country: <span th:text="${profile.country()}"></span></div>
-    <div>Email: <span th:text="${profile.email()}"></span></div>
-    <div>Bio: <span th:text="${profile.bio()}"></span></div>
-    <button hx-get="/profiles/update">Update</button>
+    <div><span th:text="#{label.firstName}"></span>: <span th:text="${profile.firstName()}"></span></div>
+    <div><span th:text="#{label.lastName}"></span>: <span th:text="${profile.lastName()}"></span></div>
+    <div><span th:text="#{label.country}"></span>: <span th:text="${profile.country()}"></span></div>
+    <div><span th:text="#{label.email}"></span>: <span th:text="${profile.email()}"></span></div>
+    <div><span th:text="#{label.bio}"></span>: <span th:text="${profile.bio()}"></span></div>
+    <button hx-get="/profiles/update" th:text="#{label.update}"></button>
 </div>
